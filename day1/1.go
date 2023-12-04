@@ -2,12 +2,25 @@ package main
 
 import (
 	"bufio"
-	"strconv"
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"unicode"
 )
+
+var wordToNum = map[string]int{
+	"zero":  0,
+	"one":   1,
+	"two":   2,
+	"three": 3,
+	"four":  4,
+	"five":  5,
+	"six":   6,
+	"seven": 7,
+	"eight": 8,
+	"nine":  9,
+}
 
 func main() {
 	f, err := os.Open("input.txt")
@@ -16,19 +29,19 @@ func main() {
 	}
 	defer f.Close()
 
-	sum := 0
+	sumPartOne := 0
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		line := scanner.Text()
-leftDigit, rightDigit := findDigits(line)
-		sum += formatResult(leftDigit, rightDigit)
+		leftDigit, rightDigit := findDigits(line)
+		sumPartOne += formatResult(leftDigit, rightDigit)
 	}
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println(sum)
+	fmt.Println(sumPartOne)
 }
 
 func findDigits(line string) (rune, rune) {
@@ -51,7 +64,7 @@ func formatResult(leftDigit, rightDigit rune) int {
 	right, _ := strconv.Atoi(string(rightDigit))
 
 	if left == 0 {
-		return right * 10 + right
+		return right*10 + right
 	} else {
 		return left*10 + right
 	}
