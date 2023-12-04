@@ -23,14 +23,13 @@ func main() {
 	for scanner.Scan() {
 		failed := false
 		line := scanner.Text()
-		//		game := strings.Split(strings.ReplaceAll(line, " ", ""), ":")[1] // game: 3 blue,4 red;1 red,2 green,6 blue;2 green
 		game := strings.Split(line, ": ")[1]
 
 		id := strings.Split(strings.ReplaceAll(line, " ", ""), ":")[0][4:]
 		sets := strings.Split(game, ";")
 
 		// Loop each set
-		for _, set := range sets { // set: 1red,2green,6blue
+		for _, set := range sets { // set: 1 red,2 green,6 blue
 			cubes := map[string]int{
 				"red":   12,
 				"green": 13,
@@ -70,5 +69,6 @@ func main() {
 		num, _ := strconv.Atoi(id)
 		ans += num
 	}
+
 	fmt.Println("ANS:", ans)
 }
