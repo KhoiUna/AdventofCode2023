@@ -9,19 +9,6 @@ import (
 	"unicode"
 )
 
-var wordToNum = map[string]int{
-	"zero":  0,
-	"one":   1,
-	"two":   2,
-	"three": 3,
-	"four":  4,
-	"five":  5,
-	"six":   6,
-	"seven": 7,
-	"eight": 8,
-	"nine":  9,
-}
-
 func main() {
 	f, err := os.Open("input.txt")
 	if err != nil {
@@ -29,43 +16,20 @@ func main() {
 	}
 	defer f.Close()
 
-	sumPartOne := 0
+	ans := 0
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		line := scanner.Text()
-		leftDigit, rightDigit := findDigits(line)
-		sumPartOne += formatResult(leftDigit, rightDigit)
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
+		digits := []string{}
 
-	fmt.Println(sumPartOne)
-}
-
-func findDigits(line string) (rune, rune) {
-	var leftDigit, rightDigit rune
-	foundLeft := false
-	for _, r := range line {
-		if unicode.IsDigit(r) {
-			if !foundLeft {
-				leftDigit = r
-				foundLeft = true
+		for _, r := range line {
+			if unicode.IsDigit(r) {
+				digits = append(digits, string(r))
 			}
-			rightDigit = r
 		}
+		num, _ := strconv.Atoi(digits[0] + digits[len(digits)-1])
+		ans += num
 	}
-	return leftDigit, rightDigit
-}
-
-func formatResult(leftDigit, rightDigit rune) int {
-	left, _ := strconv.Atoi(string(leftDigit))
-	right, _ := strconv.Atoi(string(rightDigit))
-
-	if left == 0 {
-		return right*10 + right
-	} else {
-		return left*10 + right
-	}
+	fmt.Println(ans)
 }
