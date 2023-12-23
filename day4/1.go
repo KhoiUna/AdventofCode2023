@@ -38,7 +38,6 @@ func main() {
 				count *= 2
 			}
 		}
-		fmt.Print("count->", count, "\n")
 		ANS += count
 	}
 
